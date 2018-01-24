@@ -1,6 +1,7 @@
 import sys
 
 from django.conf import settings
+from django.utils.deprecation import MiddlewareMixin
 
 from shutdown.models import ShutDown
 from shutdown.views import ShutdownView
@@ -10,7 +11,7 @@ _using_manage = True in ['manage.py' in arg for arg in sys.argv]
 TESTING = ((_using_manage and 'test' in sys.argv) or ('nosetests' in sys.argv))
 
 
-class ShutdownMiddleware(object):
+class ShutdownMiddleware(MiddlewareMixin):
     def process_request(self, request):
 
         # Django tests may set their own ROOT_URLCONF, in which case we may not
