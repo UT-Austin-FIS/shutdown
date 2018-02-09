@@ -4,7 +4,7 @@ from django.conf import settings
 from django.utils.deprecation import MiddlewareMixin
 
 from shutdown.models import ShutDown
-from shutdown.views import ShutdownView
+from shutdown.views import shutdown_view
 
 _using_manage = True in ['manage.py' in arg for arg in sys.argv]
 
@@ -24,6 +24,6 @@ class ShutdownMiddleware(MiddlewareMixin):
             return None
 
         if ShutDown.objects.count() == 1:
-            return ShutdownView.as_view()(request)
+            return shutdown_view(request)
 
         return None
