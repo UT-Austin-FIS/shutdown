@@ -11,7 +11,7 @@ To include this app in your PyPE project, simply pull it into your project via s
 
 > path: extra/shutdown
 
-> URL: https://github.com/UT-Austin-FIS/shutdown/tags/v1.1.0/shutdown
+> URL: https://github.com/UT-Austin-FIS/shutdown/tags/v1.1.2/shutdown
 
 Setup
 ------
@@ -56,6 +56,11 @@ How you add and remove the record is entirely up to you. You can edit the table 
 
 Releases
 ========
+
+* v1.1.2 (2018/2/20)
+  * Adding support for Django 1.11
+  * Converted TemplateView to function view
+
 * v1.1.1 (2015/11/16)
   * Adding support for Django 1.8, by calling .flatten() on context instances in get_context_data, to prevent RemovedInDjango110Warnings.
 

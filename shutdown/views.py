@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
-from django.views.generic.base import TemplateView
+from django.shortcuts import render
 
 from shutdown.models import ShutDown
 
@@ -15,23 +15,18 @@ except AttributeError:
     )
 
 
-class ShutdownView(TemplateView):
-    template_name = 'shutdown/shutdown.html'
-
-    def get_context_data(self, **kwargs):
-        ctx = super(ShutdownView, self).get_context_data(**kwargs)
-        objects = ShutDown.objects.all()
-        msg = objects[0].message
-        ctx.update({
-            'msg': msg,
-            })
-        ctx = context(
-            self.request,
-            ctx,
-            title='Service Outage',
-            page_title='Service Outage',
-            window_title='Service Outage',
-        )
-        if hasattr(ctx, 'flatten'):
-            ctx = ctx.flatten()
-        return ctx
+def shutdown_view(request):
+    objects = ShutDown.objects.all()
+    msg = objects[0].message
+    ctx = {}
+    ctx.update({
+        'msg': msg,
+    })
+    ctx = context(
+        request,
+        ctx,
+        title='Service Outage',
+        page_title='Service Outage',
+        window_title='Service Outage',
+    ).flatten()
+    return render(request, template_name='shutdown/shutdown.html', context=ctx)
